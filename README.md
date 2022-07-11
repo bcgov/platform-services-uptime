@@ -1,16 +1,3 @@
----
-description: This is a high level monitoring aiming to provide the community with a sense of our service reliability. Monitored services include the DevOps OpenShift 4 Platform Clusters and the shared services (also knows as Next Gen Security tools). Uptime.com tracks the history of service uptime and outages for each of the monitored service.
-tags:
-- uptime
-- service
-- monitor
-- outage
-- downtime
-- maintenance
-
-title: OpenShift 4 Platform Services Reliability Dashboard
----
-
 ![Lifecycle:Maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)
 
 # OpenShift 4 Platform Services Reliability Dashboard
