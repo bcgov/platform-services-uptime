@@ -1,49 +1,37 @@
-# platform-services-uptime
+![Lifecycle:Maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)
 
----
-description: This is a high level monitoring aiming to provide the community with a sense of our service reliability. Monitored services include the DevOps OpenShift 4 Platform Clusters and the shared services (also knows as Next Gen Security tools). Uptime.com tracks the history of service uptime and outages for each of the monitored service.
-tags:
-- uptime
-- service
-- monitor
-- outage
-- downtime
-- maintenance
-
-title: OpenShift 4 Platform Services Reliability Dashboard
----
 # OpenShift 4 Platform Services Reliability Dashboard
 
 We are using Uptime.com for our service reliability dashboard. Monitoring status page can be found here: https://status.developer.gov.bc.ca/
 
-This is a high level monitoring aiming to provide the community with a sense of our service reliability. Monitored services include the DevOps OpenShift 4 Platform Clusters and the shared services (also knows as Next Gen Security tools). Uptime.com tracks the history of service uptime and outages for each of the monitored service. In the future, there will be announcements regarding each major service planned downtime and maintenance as well as updates during outages.
+This is a high level monitoring aiming to provide the community with a sense of our service reliability. Monitored services include the DevOps OpenShift 4 Platform Clusters and the shared services (also knows as Next Gen Security tools). Uptime.com tracks the history of service uptime and outages for each of the monitored service. There will be announcements regarding each major service planned downtime and maintenance as well as updates during outages.
 
-The monitoring relies on a combination of the built-in Uptime.com monitoring functionality as well as custom more sophisticated metrics and checks that the Platform Services Team has added on top of it.
+The monitoring relies on a combination of the built-in Uptime.com monitoring functionality as well as more sophisticated custom metrics and checks that the Platform Services Team has added on top of it.
 
 ## Monitors and Alerts
+
+Here are a list of service status that Platform Services Team provides:
 
 | Monitor | Endpoint | Monitoring Interval | Alerts |
 | ------- |--------- | ------------------- | ------ |
 | Gold / GoldDR / Silver Cluster | readyz & Cerberus** | 1 min | RC / MSTeams / SMS / Email |
 | Klab / Clab / ARO Cluster | readyz & Cerberus** | 1 min | RC |
-| SSO (status on a different page) | service URL | 1 min | OpsGenie |
 | RocketChat | service URL | 1 min | RC / MSTeams |
 | Artifactory | service API ping endpoint | 1 min | RC |
-| Aqua | service API ping endpoint | 1 min | RC |
 | Registry App | service API ehlo endpoint | 1 min | RC |
-| DevHan | service URL | 1 min | RC |
+| DevHub | service URL | 1 min | RC |
 | Vault | service health endpoint | 1 min | RC |
 
 
 We use 1 minute intervals (shortest available from Uptime.com) to ping availability endpoints set up for each service. Occasionally when a service is extremely busy, the response may timeout and 1 min downtime is recorded. However, we feel that this small error is better than setting the ping intervals to a lower frequency (e.g. 5 mins) and getting a 5 min outage window when the response is not returned due to the network issues between the Uptime.com and the BC Gov network.  
 
- In order to address the problem of false positives that can occur with high frequency pings, the Platform Services Team will only receive alerts when a service is down for 5 consecutive attempts.  The Platform Services Team uses a suite of monitoring tools in addition to the  Uptime.com for monitoring such as Sysdig and Nagios which allows us to detect issues early and narrow down the problem to a specific service or a component.
+In order to address the problem of false positives that can occur with high frequency pings, the Platform Services Team will only receive alerts when a service is down for 5 consecutive attempts. The Platform Services Team uses a suite of monitoring tools in addition to Uptime.com for monitoring such as Sysdig and Nagios which allows us to detect issues early and narrow down the problem to a specific service or a component.
 
-** Cerberus: is a RedHat suggested monitoring tool for OCP cluster general healthiness. For more details, see doc [here](../cerberus/readme.md).
+** Cerberus: is a RedHat suggested monitoring tool for OCP cluster general healthiness. For more details, please refer to the [Cerberus Repo](https://github.com/bcgov/platform-services-cerberus).
 
 ## Alert Integrations
 
-When a service is down for more than 5 minutes, the pre-configured alerts will be fired off. Here are some major types of alerts we are currently using:
+When a service is down for more than 5 minutes and verified by 3 monitoring locations, the pre-configured alerts will be fired off. Here are some major types of alerts we are currently using:
 
 **1. RocketChat and MSTeams:**
 - webhook setup in a notification channel
@@ -71,8 +59,8 @@ There are different types of announcements for past and future incidents you wil
 - all the clusters and services that are impacted will be listed in the announcement
 
 **3. Maintenance Window:**
-- when there is a scheduled maintenance, details can be provided in a Maintenance Window message and the uptime statistic of the service can be opted out during those time period, based on the nature of the maintenance
+- when there is a scheduled maintenance, details will be provided in a Maintenance Window message and the uptime statistic of the service can be opted out during those time period, based on the nature of the maintenance event
 
 
 ## Monitoring Config as Code
-We will be using the [Uptime.com API](https://support.uptime.com/hc/en-us/articles/360009681280-Getting-Started-with-the-Uptime-com-REST-API) endpoint to manage the monitors and alerts.
+We are using the [Uptime.com API](https://support.uptime.com/hc/en-us/articles/360009681280-Getting-Started-with-the-Uptime-com-REST-API) endpoint to manage the monitors and alerts.
